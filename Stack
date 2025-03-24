@@ -1,0 +1,68 @@
+===Stack== 
+
+Vaild  the parantheses
+
+import java.util.Stack;
+
+public class Main {
+    public static void main(String[] args) {
+        String d="({[]})";
+        int a=1;
+        Stack<Character> bracket = new Stack<>();
+        for(int i=0;i<d.length();i++){
+            if(d.charAt(i)=='('||d.charAt(i)=='{'||d.charAt(i)=='['){
+                bracket.push(d.charAt(i));
+            }
+
+        else{
+            if(!bracket.isEmpty() && ((bracket.peek()=='(' ||d.charAt(i)==')')||
+                    (bracket.peek()=='{' && d.charAt(i)=='}') ||
+                            (bracket.peek()=='[' && d.charAt(i)==']')))
+                    {
+                        bracket.pop();
+
+            }
+            else{
+                a=2;
+            }
+        }
+    }
+        System.out.print(a);
+    }
+}
+
+
+=============================================================================================================================================================================
+https://www.geeksforgeeks.org/length-longest-balanced-parentheses-prefix/?ref=lbp
+
+import java.util.Stack;
+
+public class Main {
+    public static void main(String[] args) {
+        String d="((((())))";
+        int sum=0;
+        int openCount=0;
+        int max=0;
+        for(int i=0;i<d.length();i++){
+            if(d.charAt(i)=='(') {
+                sum = +1;
+                openCount = 1;
+            }
+            else{
+                sum=-1;
+                if(openCount>0){
+                   max=(i+1);
+                }
+                else{
+                    break;
+                }
+
+            }
+
+
+        }
+        System.out.print (max);
+
+    }
+}
+==================================================================================================================================================================================
