@@ -65,4 +65,47 @@ public class Main {
 
     }
 }
+
 ==================================================================================================================================================================================
+https://www.geeksforgeeks.org/postfix-prefix-conversion/
+
+import java.util.Stack;
+
+public class Main {
+    public static void main(String[] args) {
+       String postFix="ABC/-AK/L-*";
+       Stack <String> fix = new Stack<>();
+       for(int i=0;i<postFix.length();i++){
+           if(isOperator(postFix.charAt(i))){
+               String op1=fix.peek();
+               fix.pop();
+               String op2=fix.peek();
+               fix.pop();
+
+               String temp=postFix.charAt(i)+op2+op1;
+               fix.push(temp);
+
+
+           }
+           else{
+               fix.push(postFix.charAt(i)+"");
+
+           }
+       }
+       for(String i:fix){
+           System.out.print(i);;
+       }
+
+       }
+       public static boolean isOperator(char x){
+        switch (x){
+               case '+':
+               case '-':
+               case '*':
+               case'/':
+                   return true;
+           }
+           return false;
+       }
+}
+=============================================================================================================================================
