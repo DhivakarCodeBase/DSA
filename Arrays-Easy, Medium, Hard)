@@ -1,0 +1,617 @@
+# 1. Largest Element in an Array 
+
+class Solution {
+    public static int largest(int[] arr) {
+        // code here
+        int max=Integer.MIN_VALUE;
+        for(int i=0;i<arr.length;i++){
+            if(arr[i]>max) max=arr[i];
+        }
+        return max;
+    }
+}
+Time Complexity: O(N)
+Space Complexity: O(1)
+
+# 2. Second Largest Element in an Array without sorting
+
+class Solution {
+    public int getSecondLargest(int[] arr) {
+        int sLargest=-1; int largest=arr[0];
+        for(int i=0;i<arr.length;i++){
+            if(arr[i]>  largest){
+                sLargest=largest;
+                largest=arr[i];
+            }
+            else if(arr[i]<largest && arr[i]>sLargest){
+                sLargest=arr[i];
+            }
+        }
+        return sLargest;
+    }
+}
+Time Complexity: O(N), Single-pass solution
+Space Complexity: O(1)
+
+# 3 . Check if the array is sorted
+
+class Solution {
+    public boolean check(int[] nums) {
+//SORTED
+        /*for(int i=1;i<nums.length;i++){
+            if(nums[i]>=nums[i-1]){
+
+            }
+            else {
+                return false;
+            }
+        }
+        return true;*/
+//ROTATED AND SORTED
+        int count=0;
+        for(int i=0;i<nums.length;i++){
+            if(nums[i]>nums[(i+1)%nums.length]){
+                count++;
+            }
+            if(count>1) return false;
+        }
+        return true;
+    }
+}
+Time Complexity: O(N)
+Space Complexity: O(1)
+
+# 4 . Remove duplicates from Sorted array
+
+class Solution {
+    public int removeDuplicates(int[] arr) {
+        int i=0;
+        for(int j=1;j<arr.length;j++){
+            if(arr[i]!=arr[j]){
+                arr[i+1]=arr[j];
+                i++;
+            }
+        }
+        return i+1;
+    }
+}
+Time Complexity: O(N)
+Space Complexity: O(1)
+
+# 5. Rotate Array 
+
+// BY K PLACES
+class Solution {
+    public void rotate(int[] nums, int k) {
+        int n=nums.length;
+        k=k%n;
+        reverse(nums,0,n-k-1);
+        reverse(nums,n-k,n-1);
+        reverse(nums,0,n-1);
+    }
+    public void reverse(int[] nums,int start,int end){
+        while(start<=end){
+            int temp=nums[start];
+            nums[start]=nums[end];
+            nums[end]=temp;
+            start++;
+            end--;
+        }
+    }
+}
+
+// BY 1 PLACE 
+int temp=arr[o];
+for(int i=1;i<n;i++){
+arr[i-1]=arr[i];
+}
+arr[n-1]=temp;
+return arr;
+
+Time Complexity: O(n), as we iterate through the array only once.
+Space Complexity: O(1) as no extra space is used
+
+# 6. Move Zeros to end
+
+class Solution {
+    public void moveZeroes(int[] arr) {
+        int j=-1;
+        for(int i=0;i<arr.length;i++){
+            if(arr[i]==0){
+                j=i;
+                break;
+            }
+        }
+        for(int i=j+1;i<arr.length;i++){
+            if(arr[i]!=0){
+                int temp=arr[i];
+                arr[i]=arr[j];
+                arr[j]=temp;
+                j++;
+            }
+        }
+    }
+}
+Time Complexity: O(N), N = size of the array.
+Reason: We have used 2 loops and using those loops, we are basically traversing the array once.
+Space Complexity: O(1) as we are not using any extra space to solve this problem.
+
+# 7. Union of 2 Sorted with Duplicates
+
+class Solution {
+    // Function to return a list containing the union of the two arrays.
+    public static ArrayList<Integer> findUnion(int a[], int b[]) {
+        // add your code here
+        int i=0;int j=0;
+        ArrayList<Integer> unionArray =new ArrayList<>();
+        while(i<a.length && j<b.length){
+            if(a[i]<=b[j]){
+                if(unionArray.size()==0 || unionArray.get(unionArray.size()-1) != a[i]){
+                    unionArray.add(a[i]);
+                }
+                i++;
+            }
+            else{
+                if(unionArray.size()==0 || unionArray.get(unionArray.size()-1) != b[j]){
+                    unionArray.add(b[j]);
+                }
+                j++;
+            }
+        }
+        while(i<a.length){
+            if(unionArray.size()==0 || unionArray.get(unionArray.size()-1) != a[i]){
+                    unionArray.add(a[i]);
+                }
+                i++;
+        }
+        while(j<b.length){
+            if(unionArray.size()==0 || unionArray.get(unionArray.size()-1) != b[j]){
+                    unionArray.add(b[j]);
+                }
+                j++;
+        }
+        return unionArray;
+    }
+}
+Time Complexity: O(m+n), Because at max i runs for n times and j runs for m times. When there are no common elements in arr1 and arr2 and all elements in arr1, arr2 are distinct.
+Space Complexity : O(m+n) {If Space of Union ArrayList is considered} 
+O(1) {If Space of union ArrayList is not considered}
+
+# 8. Missing Number 
+
+public static int missingNumber(int []a, int N) {
+        //Summation of first N numbers:
+        int sum = (N * (N + 1)) / 2;
+        //Summation of all array elements:
+        int s2 = 0;
+        for (int i = 0; i < N - 1; i++) {
+            s2 += a[i];
+        }
+        int missingNum = sum - s2;
+        return missingNum;
+    }
+
+class Solution {
+    public int missingNumber(int[] nums) {
+        int xor1=0;int xor2=0;
+        int n=nums.length;
+        for(int i=0;i<n;i++){
+            xor2=xor2 ^ nums[i];
+            xor1=xor1 ^ i;
+
+        }
+        xor1=xor1^n;
+        return xor1^xor2;
+    }
+}
+Time Complexity: O(N), where N = size of array+1.
+Reason: Here, we need only 1 loop to get the sum of the array elements. The loop runs for approx. N times. So, the time complexity is O(N).
+Space Complexity: O(1) as we are not using any extra space.
+
+# 9. Max Consecutive Ones
+
+class Solution {
+    public int findMaxConsecutiveOnes(int[] nums) {
+        int maxi=0;
+        int count=0;
+        for(int i=0;i<nums.length;i++){
+            if(nums[i]==1){
+                count++;
+                maxi=Math.max(count,maxi);
+            }
+            else{
+                count=0;
+            }
+        }
+        return maxi;
+    }
+}
+
+# 10. Single Element 
+
+[BETTER SOLUTION]
+    public static int getSingleElement(int []arr) {
+        int n = arr.length;        
+        HashMap<Integer, Integer> mpp = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            int value = mpp.getOrDefault(arr[i], 0);
+            mpp.put(arr[i], value + 1);
+        }
+        for (Map.Entry<Integer, Integer> it : mpp.entrySet()) {
+            if (it.getValue() == 1) {
+                return it.getKey();
+            }
+        }
+        return -1;
+    }
+Time Complexity: O(N*logM) + O(M), where M = size of the map i.e. M = (N/2)+1. N = size of the array.
+Space Complexity: O(M) as we are using a map data structure. Here M = size of the map i.e. M = (N/2)+1.
+
+[OPTIMAL SOLUTION]
+class Solution {
+    public int singleNumber(int[] nums) {
+        int xor=0;
+        for(int i=0;i<nums.length;i++){
+            xor=xor^nums[i];
+        }
+        return xor;
+    }
+}
+
+# 11. Longest subarray with given sum K
+
+[Positive & Negative] - use HashMap
+class Solution {
+    public int longestSubarray(int[] arr, int k) {
+        Map<Integer,Integer> preSumMap=new HashMap<>();
+        int sum=0; int maxLen=0;
+        for(int i=0;i<arr.length;i++){
+            sum+=arr[i];
+            if(sum==k)
+                maxLen=Math.max(maxLen,i+1);
+            int rem=sum-k;
+            if(preSumMap.containsKey(rem)){
+                int len= i-preSumMap.get(rem);
+                maxLen=Math.max(maxLen,len);
+            }
+            if(!preSumMap.containsKey(sum)){
+                preSumMap.put(sum,i);
+            }
+       }        
+        return maxLen;
+    }
+}
+Time Complexity - O(N*logN) 
+Space Complexity - O(N)
+
+[only Positives] - use two pointer
+class Solution {
+    public int longestSubarray(int[] arr, int k) {
+        Map<Integer,Integer> preSumMap=new HashMap<>();
+        int sum=0; int maxLen=0;
+        for(int i=0;i<arr.length;i++){
+            sum+=arr[i];
+            if(sum==k)
+                maxLen=Math.max(maxLen,i+1);
+            int rem=sum-k;
+            if(preSumMap.containsKey(rem)){
+                int len= i-preSumMap.get(rem);
+                maxLen=Math.max(maxLen,len);
+            }
+            if(!preSumMap.containsKey(sum)){
+                preSumMap.put(sum,i);
+            }
+       }
+        
+        return maxLen;
+    }
+}
+Time Complexity: O(2*N)
+Space Complexity: O(1) 
+
+# 12. Two Sum 
+
+[Better Solution]
+public static String twoSum(int n, int []arr, int target) {
+        HashMap<Integer, Integer> mpp = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            int num = arr[i];
+            int moreNeeded = target - num;
+            if (mpp.containsKey(moreNeeded)) {
+                return "YES";
+            }
+            mpp.put(arr[i], i);
+        }
+        return "NO";
+    }
+Time Complexity: O(N)
+Space Complexity: O(N) 
+
+[Optimal Solution]
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        int ans[]={-1,-1};
+        Map<Integer,Integer> mpp=new HashMap<>();
+        for(int i=0;i<nums.length;i++){
+            int num=nums[i];
+            int moreNeeded=target-num;
+            if(mpp.containsKey(moreNeeded)){
+                ans[0]=mpp.get(moreNeeded);
+                ans[1]=i;
+            }
+            mpp.put(nums[i],i);
+        }
+        return ans;
+    }
+}
+Time Complexity: O(N) + O(N*logN), where N = size of the array.
+Reason: The loop will run at most N times. And sorting the array will take N*logN time complexity.
+Space Complexity: O(1) as we are not using any extra space.
+Note: Here we are distorting the given array. So, if we need to consider this change, the space complexity will be O(N).
+
+# 13. Sort an array of 0s, 1s and 2s
+
+  [Dutch National flag algorithm]
+class Solution {
+    public void sortColors(int[] nums) {
+        int low=0;int mid=0;int high=nums.length-1;
+        while(mid<=high){
+        if(nums[mid]==0){
+            int temp=nums[low];
+            nums[low]=nums[mid];
+            nums[mid]=temp;
+            low++;
+            mid++;
+        }
+        else if(nums[mid]==1){
+            mid++;
+        }
+        else{
+            int temp=nums[high];
+            nums[high]=nums[mid];
+            nums[mid]=temp;
+            high--;
+        }
+        }
+    }
+}
+Time Complexity: O(N)
+Space Complexity: O(1)
+
+# 14. Majority Element (>n/2 times)
+
+[Better Solution]
+public static int majorityElement(int []v) {
+        int n = v.length;
+        HashMap<Integer, Integer> mpp = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            int value = mpp.getOrDefault(v[i], 0);
+            mpp.put(v[i], value + 1);
+        }
+        for (Map.Entry<Integer, Integer> it : mpp.entrySet()) {
+            if (it.getValue() > (n / 2)) {
+                return it.getKey();
+            }
+        }
+        return -1;
+    }
+Time Complexity: O(N*logN) + O(N)
+Space Complexity: O(N) 
+
+[Optimal Approach: Moore’s Voting Algorithm]
+class Solution {
+    public int majorityElement(int[] nums) {
+        int el=0;int count=0;
+        for(int i=0;i<nums.length;i++){
+            if(count==0){
+                count=1;
+                el=nums[i];
+            }
+            else if(nums[i]==el){
+                count++;
+            }
+            else{
+                count--;
+            }
+        }
+        int count1=0;
+        for(int i=0;i<nums.length;i++){
+            if(el==nums[i]) count1++;
+        }
+        if(count1>nums.length/2) return el;
+            return -1;
+    }
+}
+Time Complexity: O(N) + O(N)
+Note: If the question states that the array must contain a majority element, in that case, we do not need the second check. Then the time complexity will boil down to O(N).
+Space Complexity: O(1)
+
+# 15. Maximum subarray sum
+
+[Brute Force Solution]
+public static int maxSubarraySum(int[] arr, int n) {
+        int maxi = Integer.MIN_VALUE;
+        for (int i = 0; i < n; i++) {
+            int sum = 0;
+            for (int j = i; j < n; j++) {
+                sum += arr[j];
+                maxi = Math.max(maxi, sum); 
+            }
+        }
+
+[Kadane's Algorithm]
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int sum=0;int max=Integer.MIN_VALUE;
+        for(int i=0;i<nums.length;i++){
+            sum+=nums[i];
+            if(sum>=max){
+                max=sum;
+            }
+            if(sum<0) sum=0;
+        }
+        return max;
+    }
+}
+
+# 16. Maximum Score from Subarray Minimums
+
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int sum=0;int max=Integer.MIN_VALUE;
+        for(int i=0;i<nums.length;i++){
+            sum+=nums[i];
+            if(sum>=max){
+                max=sum;
+            }
+            if(sum<0) sum=0;
+        }
+        return max;
+    }
+}
+
+# 17. Best Time to Buy and Sell Stock
+
+class Solution {
+    public int maxProfit(int[] prices) {
+        int min=prices[0]; int maxProfit=0;
+        for(int i=1;i<prices.length;i++){
+            int cost=prices[i]-min;
+            maxProfit=Math.max(maxProfit,cost);
+            min=Math.min(min,prices[i]);
+        }
+        return maxProfit;
+    }
+}
+
+# 18. Rearrange the array in alternating positive and negative Sign
+
+class Solution {
+    public int[] rearrangeArray(int[] nums) {
+        int[] ans=new int[nums.length];
+        int positive=0; int negative =1;
+        for(int i=0;i<nums.length;i++){
+            if(nums[i]<0){
+                ans[negative]=nums[i];
+                negative+=2;
+            }
+            else{
+                ans[positive]=nums[i];
+                positive+=2;
+            }
+        }
+        return ans;
+    }
+}
+
+# 19. Next permutation 
+
+class Solution {
+    public void nextPermutation(int[] nums) {
+        int index=-1; int n=nums.length;
+        for(int i=n-2;i>=0;i--){
+            if(nums[i]<nums[i+1]){
+                index=i;
+                break;
+            }
+        }
+        if(index==-1){
+            reverse(nums,0,n-1);
+            return;
+        }
+        for(int i=n-1;i>index;i--){
+            if(nums[i]>nums[index]){
+                int temp=nums[i];
+                nums[i]=nums[index];
+                nums[index]=temp;
+                break;
+            }
+        }
+        reverse(nums,index+1,n-1);
+    }
+    public void reverse(int[] nums, int start, int end){
+        while(start<end){
+            int temp=nums[start];
+            nums[start]=nums[end];
+            nums[end]=temp;
+            start++;
+            end--;
+        }
+    }
+}
+
+# 20. Leaders in an Array
+
+class Solution {
+    static ArrayList<Integer> leaders(int arr[]) {
+        // code here
+         ArrayList<Integer> ans = new ArrayList<>();
+         int n=arr.length;
+        int max=arr[n-1];
+        ans.add(max);
+        for(int i=n-2;i>=0;i--){
+            if(arr[i]>=max){
+               ans.add(arr[i]);
+               max=arr[i];
+            } 
+        }
+        reverse(ans,0,ans.size()-1);
+        return ans;
+    }
+    public static void reverse(ArrayList<Integer> ans,int start,int end){
+        while(start<end){
+            int temp=ans.get(start);
+            ans.set(start,ans.get(end));
+            ans.set(end,temp);
+            start++;
+            end--;
+        }
+    }
+}
+
+# 21. Longest Consecutive Sequence
+
+class Solution {
+    public int longestConsecutive(int[] nums) {
+       int count=0; int n=nums.length;
+       int longestSeq=1;
+       Set<Integer> set= new HashSet<>();
+       if(n==0) return 0;
+       for(int i=0;i<n;i++){
+        set.add(nums[i]);
+       }
+       for(int it:set){
+        if(!set.contains(it-1)){
+            count=1;
+            int x=it;
+            while(set.contains(x+1)){
+                count+=1;
+                x=x+1;
+            }
+        }
+        longestSeq=Math.max(count,longestSeq);
+       } 
+       return longestSeq;
+    }
+}
+Time Complexity: O(2*N) 
+Space Complexity: O(N)
+
+# 22. Count subarrays with given sum
+
+class Solution {
+    public int subarraySum(int[] nums, int k) {
+        int count=0;int preSum=0; int n=nums.length;
+        Map<Integer,Integer> mpp=new HashMap<>();
+        mpp.put(0,1);
+        for(int i=0;i<n;i++){
+            preSum+=nums[i];
+            int remove = preSum-k;
+            count += mpp.getOrDefault(remove,0);
+            mpp.put(preSum,mpp.getOrDefault(preSum,0)+1);
+        }
+        return count;
+    }
+}
+Time Complexity: O(N) or O(N*logN) 
+Space Complexity: O(N) 
