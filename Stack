@@ -133,3 +133,72 @@ public class Main {
        }
        }
 }
+
+=====================================================================================================================
+Delete an middle element in  a stack.
+import java.util.Stack;
+
+public class Main {
+    public static void main(String[] args) {
+//        Stack<Integer> st = new Stack<>();
+//        st.push(1);
+//        st.push(2);
+//        st.push(3);
+//        st.push(4);
+//        st.push(5);
+//        st.push(6);
+//        st.push(7);
+//        int n= st.size();
+//        int mid = n/2;
+//        Stack<Integer> temp = new Stack<>();
+//        for(int i=0;i<n;i++){
+//            int x=st.pop();
+//            if(i!=mid){
+//                temp.push(x);
+//
+//            }
+//        }
+//        while(!temp.isEmpty()){
+//            st.push(temp.pop());
+//        }
+//        while (!st.empty()) {
+//            int p = st.pop();
+//            System.out.print(p + " ");
+//        }
+        Stack<Integer> st = new Stack<>();
+        st.push(1);
+        st.push(2);
+        st.push(3);
+        st.push(4);
+        st.push(5);
+        st.push(6);
+        st.push(7);
+
+        deleteMid(st, st.size(), 0);
+
+        // Printing stack after deletion
+        // of middle.
+        while (!st.empty())
+        {
+            int p=st.pop();
+            System.out.print(p + " ");
+        }
+
+    }
+
+    private static void deleteMid(Stack<Integer> st, int size, int i) {
+
+        if(st.isEmpty() || i==size){
+            return;
+
+        }
+        int x =st.pop();
+        deleteMid(st,size,i+1);
+        if(i !=size/2){
+            st.push(x);
+
+
+
+        }
+    }
+}
